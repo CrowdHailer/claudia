@@ -13,9 +13,13 @@ module Claudia
   	end
 
   	def method_missing(method_name, *arguments, &block)
-  		if base_object_respond_to? method_name
-  			result = __getobj__.public_send method_name
-  			raise StringMethodError.new unless result.class == String
+      if base_object_respond_to? method_name
+        result = __getobj__.public_send method_name
+        if method_name.to_s =~ /.+\?$/
+    			raise BooleanMethodError.new unless result.class == TrueClass || FalseClass
+        else
+          raise StringMethodError.new unless result.class == String
+        end
   			result
   		else
   			super

@@ -3,6 +3,7 @@ require_relative '../test_config'
 class PresenterTest < MiniTest::Test
 	StringStruct = Struct.new(:get_string)
 	NumberStruct = Struct.new(:get_number)
+	BooleanStruct = Struct.new(:boolean?)
 
 	def string_example
 		StringStruct.new 'testy string'
@@ -19,5 +20,11 @@ class PresenterTest < MiniTest::Test
 		assert_raises Claudia::StringMethodError do
 			puts presenter.get_number
 		end
+	end
+
+	def test_presenter_delegates_boolean_methods
+		object = BooleanStruct.new true
+		presenter = Claudia::Presenter.new object
+		assert_equal true, presenter.boolean?
 	end
 end
