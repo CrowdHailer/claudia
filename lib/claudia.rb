@@ -1,5 +1,8 @@
 require "claudia/version"
+require 'delegate'
 
 module Claudia
-  # Your code goes here...
+  class Presenter < SimpleDelegator
+  	
+  end
 end
